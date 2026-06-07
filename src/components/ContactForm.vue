@@ -61,16 +61,25 @@
       </label>
     </div>
     <div class="form-group">
-      <button class="btn btn-primary">Lưu</button>
+      <button class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Lưu
+      </button>
       <button
-        v-if="contactLocal._id"
+        v-if="this.mode == 'edit' && 'contactLocal._id'"
         type="button"
         class="ml-2 btn btn-danger"
         @click="deleteContact"
       >
+        <i class="fa-solid fa-trash"></i>
         Xóa
       </button>
-      <button type="button" class="ml-2 btn btn-danger" @click="Cancel">
+      <button
+        v-if="this.mode == 'edit'"
+        type="button"
+        class="ml-2 btn btn-danger"
+        @click="Cancel"
+      >
         Thoát
       </button>
     </div>
@@ -89,6 +98,7 @@ export default {
   emits: ["submit:contact", "delete:contact"],
   props: {
     contact: { type: Object, required: true },
+    mode: { type: String, default: "edit" },
   },
   data() {
     const contactFormSchema = yup.object().shape({
